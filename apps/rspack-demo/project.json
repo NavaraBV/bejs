@@ -1,0 +1,64 @@
+{
+    "name": "rspack-demo",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/rspack-demo/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nx/webpack:webpack",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "target": "node",
+                "compiler": "tsc",
+                "outputPath": "dist/apps/rspack-demo",
+                "main": "apps/rspack-demo/src/main.ts",
+                "tsConfig": "apps/rspack-demo/tsconfig.app.json",
+                "assets": ["apps/rspack-demo/src/assets"],
+                "isolatedConfig": true,
+                "webpackConfig": "apps/rspack-demo/webpack.config.js"
+            },
+            "configurations": {
+                "development": {},
+                "production": {}
+            }
+        },
+        "serve": {
+            "executor": "@nx/js:node",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "rspack-demo:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "rspack-demo:build:development"
+                },
+                "production": {
+                    "buildTarget": "rspack-demo:build:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nx/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/rspack-demo/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "apps/rspack-demo/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        }
+    },
+    "tags": []
+}
