@@ -1,0 +1,43 @@
+#dots {
+  max-width: 24px;
+  &.primary {
+    #dot {
+      @apply bg-primary-text
+    }
+  }
+  &.secondary {
+    #dot {
+      @apply bg-secondary-text
+    }
+  }
+  &.accent {
+    #dot {
+      @apply bg-accent-text
+    }
+  }
+  @apply flex flex-row w-full mx-2 justify-between
+}
+
+#dot {
+  @apply w-1 h-1 rounded animate-bounce-xl
+}
+#dot:nth-child(2) {
+  animation-delay: 200ms;
+}
+#dot:nth-child(3) {
+  animation-delay: 400ms;
+}
+
+@keyframes bounce-xl {
+  0%, 100% {
+    transform: translateY(-50%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+  50% {
+    transform: translateY(50%);
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+.animate-bounce-xl {
+  animation: bounce-xl 1s infinite;
+}

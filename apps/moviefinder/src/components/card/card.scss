@@ -1,0 +1,14 @@
+#card {
+  @apply bg-gradient-to-b from-background-800 to-background-900 max-w-md rounded-lg border-background-700 border
+}
+
+#image {
+  @apply rounded-t-lg max-h-60 object-cover w-full
+}
+
+#content {
+  h5 {
+    @apply text-2xl font-mono font-bold
+  }
+  @apply p-4 flex flex-col gap-4
+}

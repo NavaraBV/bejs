@@ -1,0 +1,34 @@
+.btn {
+  min-width: 42px;
+  min-height: 2rem;
+
+  &.disabled {
+    opacity: 0.6;
+  }
+
+  @apply font-bold font-sans py-2 rounded-lg w-32 shadow-2xl flex items-center justify-center;
+}
+.small {
+  @apply text-xs font-normal whitespace-nowrap w-min;
+}
+.large {
+  @apply w-60;
+}
+.primary {
+  &:not(.disabled) {
+    @apply hover:bg-primary-800
+  }
+  @apply bg-primary text-primary-text ;
+}
+.secondary {
+  &:not(.disabled) {
+    @apply hover:bg-secondary-600
+  }
+  @apply bg-secondary text-secondary-text
+}
+.accent {
+  &:not(.disabled) {
+    @apply hover:bg-accent-600
+  }
+  @apply bg-accent text-accent-text
+}
