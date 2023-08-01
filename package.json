@@ -27,6 +27,7 @@
         "@typescript-eslint/eslint-plugin": "^5.60.1",
         "@typescript-eslint/parser": "^5.60.1",
         "@vitest/ui": "~0.32.0",
+        "app-root-path": "^3.1.0",
         "autoprefixer": "~10.4.11",
         "esbuild": "^0.17.17",
         "eslint": "~8.15.0",

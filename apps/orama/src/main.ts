@@ -3,8 +3,10 @@ import { createReadStream } from 'fs';
 import { create, insert, Orama, search, count } from '@orama/orama';
 import { input } from '@inquirer/prompts';
 import { green, blue } from 'chalk';
+import { join } from 'path';
+import { path as appRootPath } from 'app-root-path';
 
-const CSV_PATH = '/Users/pietervanderveeken/Downloads/archive(1)/movies_metadata.csv';
+const CSV_PATH = join(appRootPath, 'apps/orama/src/assets/movies_metadata.csv');
 
 async function main() {
     console.log(blue('Initializing Orama database...'));
