@@ -1,4 +1,5 @@
 import { component$, useVisibleTask$ } from '@builder.io/qwik';
+import {files} from '../webcontainer-completed/files';
 
 export default component$(() => {
     useVisibleTask$(async () => {
@@ -7,6 +8,10 @@ export default component$(() => {
         const iframeElement = document.querySelector('.iframe') as HTMLIFrameElement;
 
         // show index.tsx in textarea
+        // @ts-expect-error type error
+        textareaElement.value = files.src.directory.routes.directory['index.tsx'].file.contents;
+
+        // create terminal
 
         // create webcontainer instance
 

@@ -6,12 +6,14 @@ import { Movie } from '../../types/movies.type';
 import { Loading } from '../../components/loading/loading';
 import { movieDetails } from './movie-stub';
 
-export const useMovieSearchAction = routeAction$(async ({ movieId }, { fail }) => {
+export const useMovieSearchAction = routeAction$(async ({ movieId }) => {
     const movie = movieDetails;
-
-    if (movie.Error) {
-        return fail(404, { message: `Movie not found.` });
-    }
+    // const request = await fetch(`http://www.omdbapi.com/?i=${movieId}&apikey=${apiKey}`);
+    // const movie = await request.json();
+    //
+    // if (movie.Error) {
+    //     return {};
+    // }
 
     return { movie };
 });

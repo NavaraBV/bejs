@@ -26,7 +26,7 @@ const startDevServer = async (
 ) => {
     const process = await container.spawn('npm', ['run', 'dev']);
 
-    process.output.pipeTo(
+    void process.output.pipeTo(
         new WritableStream<string>({
             write(data) {
                 terminal.write(data);
@@ -37,6 +37,8 @@ const startDevServer = async (
     container.on('server-ready', (port, url) => {
         iframeEl.src = url;
     });
+
+    return process;
 };
 
 export default component$(() => {
@@ -57,13 +59,13 @@ export default component$(() => {
         const webContainerInstance = await WebContainer.boot();
         await webContainerInstance.mount(files);
 
-        textareaElement.addEventListener('input', (e) => {
-            // @ts-expect-error ssht
-            writeToIndexTsx(webContainerInstance, e.currentTarget.value);
-        });
-
         await installDependencies(webContainerInstance, terminal);
+
         await startDevServer(webContainerInstance, terminal, iframeElement);
+
+        textareaElement.addEventListener('input', async (e: any) => {
+            await writeToIndexTsx(webContainerInstance, e.target.value);
+        });
     });
 
     return (

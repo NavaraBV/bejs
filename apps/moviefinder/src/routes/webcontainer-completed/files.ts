@@ -5,8 +5,27 @@ export const files: FileSystemTree = {
         file: {
             contents: `
 {
-  "name": "example-app",
-  "type": "module",
+  "name": "qwik-ception",
+  "description": "Qwik inside Qwik",
+  "engines": {
+    "node": ">=15.0.0"
+  },
+  "private": true,
+  "scripts": {
+    "build": "qwik build",
+    "build.client": "vite build",
+    "build.preview": "vite build --ssr src/entry.preview.tsx",
+    "build.types": "tsc --incremental --noEmit",
+    "deploy": "echo 'Run \\"npm run qwik add\\" to install a server adapter'",
+    "dev": "vite --mode ssr",
+    "dev.debug": "node --inspect-brk ./node_modules/vite/bin/vite.js --mode ssr --force",
+    "fmt": "prettier --write .",
+    "fmt.check": "prettier --check .",
+    "lint": "eslint \\"src/**/*.ts*\\"",
+    "preview": "qwik build preview && vite preview --open",
+    "start": "vite --open --mode ssr",
+    "qwik": "qwik"
+  },
   "devDependencies": {
     "@builder.io/qwik": "^1.1.4",
     "@builder.io/qwik-city": "^1.1.4",
@@ -21,15 +40,9 @@ export const files: FileSystemTree = {
     "undici": "5.22.1",
     "vite": "4.3.5",
     "vite-tsconfig-paths": "4.2.0"
-  },
-  "dependencies": {
-    "express": "latest",
-    "nodemon": "latest"
-  },
-  "scripts": {
-    "dev": "vite --mode ssr"
   }
-}`,
+}
+`,
         },
     },
     'vite.config.ts': {
@@ -68,7 +81,6 @@ export default component$(() => {
     <QwikCityProvider>
       <head>
         <meta charSet="utf-8" />
-        <link rel="manifest" href="/manifest.json" />
       </head>
       <body lang="en">
         <RouterOutlet />
@@ -82,7 +94,20 @@ export default component$(() => {
             },
             'global.css': {
                 file: {
-                    contents: ``,
+                    contents: `
+#card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: lightgray;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.navara-blue {
+    color: #3665ff;
+}
+                    `,
                 },
             },
             'entry.ssr.tsx': {
@@ -120,12 +145,12 @@ export default createQwikCity({ render, qwikCityPlan });
             'entry.dev.tsx': {
                 file: {
                     contents: `
-                        import { render, type RenderOptions } from '@builder.io/qwik';
-                        import Root from './root';
+import { render, type RenderOptions } from '@builder.io/qwik';
+import Root from './root';
 
-                        export default function (opts: RenderOptions) {
-                          return render(document, <Root />, opts);
-                        }
+export default function (opts: RenderOptions) {
+  return render(document, <Root />, opts);
+}
                     `,
                 },
             },
@@ -133,16 +158,15 @@ export default createQwikCity({ render, qwikCityPlan });
                 directory: {
                     'index.tsx': {
                         file: {
-                            contents: `import { component$, useSignal } from '@builder.io/qwik';
+                            contents: `
+import { component$, useSignal } from '@builder.io/qwik';
 
 export default component$(() => {
     const counter = useSignal(0);
     return (
         <>
-            <div>
-                <h1>This is a qwik application inside a qwik application</h1>
-            </div>
-            <div>
+            <div id={"card"}>
+                <h1 class="">This is a <span class="">Qwik</span> application inside a <span class="">Qwik</span> application</h1>
                 <button onClick$={() => counter.value += 1}>increment</button>
                 <h3>{counter.value}</h3>
             </div>
