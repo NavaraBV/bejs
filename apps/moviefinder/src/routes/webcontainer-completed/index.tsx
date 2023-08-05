@@ -19,10 +19,29 @@ const installDependencies = async (container: WebContainer, terminal: Terminal) 
     return await installProcess.exit;
 };
 
+const startShell = async (container: WebContainer, terminal: Terminal) => {
+    const shellProcess = await container.spawn('jsh');
+
+    void shellProcess.output.pipeTo(
+        new WritableStream<string>({
+            write(data) {
+                terminal.write(data);
+            },
+        }),
+    );
+
+    const input = shellProcess.input.getWriter();
+    terminal.onData((data) => {
+        input.write(data);
+    });
+
+
+    return await shellProcess.exit;
+};
+
 const startDevServer = async (
     container: WebContainer,
-    terminal: Terminal,
-    iframeEl: HTMLIFrameElement,
+    terminal: Terminal
 ) => {
     const process = await container.spawn('npm', ['run', 'dev']);
 
@@ -34,8 +53,9 @@ const startDevServer = async (
         }),
     );
 
-    container.on('server-ready', (port, url) => {
-        iframeEl.src = url;
+    const input = process.input.getWriter();
+    terminal.onData((data) => {
+        input.write(data);
     });
 
     return process;
@@ -59,13 +79,20 @@ export default component$(() => {
         const webContainerInstance = await WebContainer.boot();
         await webContainerInstance.mount(files);
 
-        await installDependencies(webContainerInstance, terminal);
-
-        await startDevServer(webContainerInstance, terminal, iframeElement);
-
         textareaElement.addEventListener('input', async (e: any) => {
             await writeToIndexTsx(webContainerInstance, e.target.value);
         });
+
+        webContainerInstance.on('server-ready', (port, url) => {
+            iframeElement.src = url;
+        });
+
+        // interactive shell
+        void startShell(webContainerInstance, terminal);
+
+        // npm i && npm run dev
+        // await installDependencies(webContainerInstance, terminal);
+        // await startDevServer(webContainerInstance, terminal);
     });
 
     return (
