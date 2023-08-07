@@ -1,5 +1,6 @@
 import { component$, useVisibleTask$ } from '@builder.io/qwik';
-import {files} from '../webcontainer-completed/files';
+import { files } from '../webcontainer-completed/files';
+import { Terminal } from 'xterm';
 
 export default component$(() => {
     useVisibleTask$(async () => {
@@ -12,10 +13,20 @@ export default component$(() => {
         textareaElement.value = files.src.directory.routes.directory['index.tsx'].file.contents;
 
         // create terminal
+        const terminal = new Terminal({
+            convertEol: true,
+        });
+
+        terminal.open(terminalElement);
 
         // create webcontainer instance
 
         // mount files
+
+        textareaElement.addEventListener('input', async (inputEvent: any) => {
+            const content = inputEvent.target.value;
+            // write file changes to container instance
+        });
 
         // install dependencies, show output in terminal
 

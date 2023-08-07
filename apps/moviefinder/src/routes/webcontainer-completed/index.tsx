@@ -70,13 +70,16 @@ export default component$(() => {
         // @ts-expect-error type error
         textareaElement.value = files.src.directory.routes.directory['index.tsx'].file.contents;
 
+        // create terminal
         const terminal = new Terminal({
             convertEol: true,
         });
 
         terminal.open(terminalElement);
 
+        // create webcontainer instance
         const webContainerInstance = await WebContainer.boot();
+        // mount files
         await webContainerInstance.mount(files);
 
         textareaElement.addEventListener('input', async (e: any) => {
