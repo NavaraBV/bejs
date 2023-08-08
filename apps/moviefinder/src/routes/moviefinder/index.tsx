@@ -5,6 +5,7 @@ import { Card } from '../../components/card/card';
 import { Movie } from '../../types/movies.type';
 import { Loading } from '../../components/loading/loading';
 import { movieDetails } from './movie-stub';
+import React from 'react';
 
 export const useMovieSearchAction = routeAction$(async ({ movieId }) => {
     const movie = movieDetails;
@@ -30,13 +31,15 @@ export default component$(() => {
 
     return (
         <>
+            <div class={'flex justify-center p-2 text-background-500'}>
+                <p>tt15398776, tt1517268, tt0910970</p>
+            </div>
             <div class={'flex justify-center w-full'}>
                 <Form
                     class={'bg-background-200 w-1/2'}
                     action={movieSearchAction}
                     onSubmitCompleted$={onSubmitComplete}
-                >
-                </Form>
+                ></Form>
             </div>
             <div class="flex justify-center p-4 h-3/4">
                 {movieDetails.value ? (

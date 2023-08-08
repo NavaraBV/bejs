@@ -4,8 +4,9 @@ import { Form, routeAction$ } from '@builder.io/qwik-city';
 import { Card } from '../../components/card/card';
 import { Movie } from '../../types/movies.type';
 import { Loading } from '../../components/loading/loading';
-import { QwikTextField } from '../../components/textfield/react';
 import {apiKey} from './secret/secrets.server';
+import React from 'react';
+import {QwikTextField} from './react';
 
 export const useMovieSearchAction = routeAction$(async ({ movieId }, { fail }) => {
     const request = await fetch(`http://www.omdbapi.com/?i=${movieId}&apikey=${apiKey}`);
@@ -30,6 +31,7 @@ export default component$(() => {
 
     return (
         <>
+            <div class={"flex justify-center p-2 text-background-500"}><p>tt15398776, tt1517268, tt0910970</p></div>
             <div class={'flex justify-center w-full'}>
                 <Form
                     class={'bg-background-200 w-1/2'}
@@ -39,7 +41,7 @@ export default component$(() => {
                     <QwikTextField
                         fullWidth
                         name={'movieId'}
-                        label={'Search by movie id'}
+                        label={'...'}
                     ></QwikTextField>
                 </Form>
             </div>
