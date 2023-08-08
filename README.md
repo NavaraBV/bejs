@@ -15,3 +15,5 @@ Run `npx nx connect-to-nx-cloud` to enable [remote caching](https://nx.app) and 
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
+
+nx g @nx/rspack:configuration --project=rspack-demo --framework=nest --no-interactive --dry-run
