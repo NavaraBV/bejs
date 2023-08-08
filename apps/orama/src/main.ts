@@ -49,19 +49,10 @@ async function promptUser(oramaDb: Orama) {
     if (query === 'exit' || query === 'q') {
         return;
     }
-    const queryParts = query.split(':');
-    let searchResult;
+    const searchResult = await search(oramaDb, {
+        term: query,
+    });
 
-    if (queryParts.length === 2) {
-        searchResult = await search(oramaDb, {
-            term: queryParts[1],
-            properties: [queryParts[0]],
-        });
-    } else {
-        searchResult = await search(oramaDb, {
-            term: queryParts.join(':'),
-        });
-    }
     console.log(
         green(`Found ${searchResult.hits.length} movies in ${searchResult.elapsed.formatted}:\n`),
     );
